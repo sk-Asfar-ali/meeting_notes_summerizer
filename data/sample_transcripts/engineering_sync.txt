@@ -1,0 +1,14 @@
+Meeting: Weekly Engineering Sync
+Date: October 12, 2023
+Attendees: Alice (Tech Lead), Bob (Backend), Charlie (Frontend), Dave (DevOps)
+
+Alice: Alright, let's get started. We have a lot to cover today. First on the agenda is the new authentication API. Bob, what's the status?
+Bob: The core logic is done, but we're hitting a bottleneck with the Redis cache during high load. I need to optimize the connection pooling.
+Alice: How long will that take? We need this ready for the beta launch next week.
+Bob: I should have it fixed by tomorrow. I'll create a PR by end of day Wednesday.
+Charlie: While we're on the topic, the frontend login screen is ready, but I'm waiting on Bob's API to test the error states. 
+Alice: Okay, decision made: Bob will prioritize the Redis fix. Charlie, you mock the error states for now and unblock yourself. 
+Dave: I wanted to bring up a risk regarding our deployment pipeline. The staging environment is running out of disk space because of the old docker images. If we don't clean it up, the next deployment might fail.
+Alice: Good catch, Dave. Can you take ownership of cleaning up the old images and setting up a cron job to prune them automatically?
+Dave: Yeah, I'll get that done by Friday.
+Alice: Great. Let's wrap up. Any other blockers? No? Okay, see everyone next week.
