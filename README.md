@@ -18,7 +18,7 @@ A complete, locally-hosted, privacy-first AI application for summarizing meeting
 Download and install Ollama from [ollama.com](https://ollama.com/).
 Once installed, open your terminal and pull the lightweight model:
 ```bash
-ollama run qwen2.5:1.5b
+ollama run llama3.2
 ```
 *(Leave Ollama running in the background, or ensure the service is active).*
 
@@ -38,7 +38,7 @@ streamlit run streamlit_app.py
 
 ## Architecture
 - **UI**: Streamlit
-- **LLM**: Ollama (`qwen2.5:1.5b`)
+- **LLM**: Ollama (`llama3.2`)
 - **Embeddings**: `sentence-transformers/all-MiniLM-L6-v2`
 - **Databases**: SQLite (structured data) + ChromaDB (semantic search)
 
