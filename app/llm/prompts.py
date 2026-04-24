@@ -14,9 +14,6 @@ CRITICAL EDGE CASE RULES (MUST FOLLOW STRICTLY):
 7. Multiple Actions: If a sentence contains multiple tasks (e.g., "I will test the API and update the docs"), split them into separate distinct action items.
 8. Greetings & Small Talk: Ignore small talk, greetings, or system messages (e.g., "Recording started", "Hi everyone", "Thanks, bye") when creating your summary.
 
-Past Meetings Context (FOR REFERENCE ONLY):
-{past_context}
-
 Meeting Transcript:
 {transcript}
 
