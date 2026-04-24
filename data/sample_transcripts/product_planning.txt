@@ -1,0 +1,17 @@
+Meeting: Q3 Product Roadmap Planning
+Date: September 5, 2023
+Attendees: Sarah (Product Manager), Mike (Design), Elena (Engineering), Tom (Sales)
+
+Sarah: Welcome everyone. The goal of this meeting is to finalize our priorities for Q3. Tom, let's start with feedback from the sales team.
+Tom: The biggest request from enterprise clients is the SSO integration. We've lost two deals this quarter because we only support Google OAuth. We need Okta and Azure AD.
+Sarah: Understood. Elena, what's the engineering effort for adding Okta and Azure AD?
+Elena: It's significant. We'd need to refactor the user management module. I'd estimate it takes about 3 weeks of dedicated work from two engineers.
+Sarah: Let's make a decision. We will prioritize the SSO integration for Q3. It's critical for revenue. Elena, please allocate the necessary resources.
+Mike: What about the new dashboard redesign? We've already finished the Figma prototypes.
+Sarah: That's a great point. However, given the SSO requirement, I think we need to push the dashboard redesign to Q4. Is everyone okay with that?
+Tom: Works for sales. SSO is definitely higher priority.
+Elena: Agreed. It gives us time to focus.
+Sarah: Perfect. So the decisions are: SSO is priority #1 for Q3. Dashboard redesign is delayed to Q4. 
+Elena, I need you to draft a technical spec for the SSO feature by next Monday.
+Elena: Will do. 
+Sarah: Thanks everyone. Let's make Q3 a success.
