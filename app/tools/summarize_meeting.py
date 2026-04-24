@@ -2,9 +2,12 @@ import json
 from app.llm.ollama_client import OllamaClient
 from app.llm.prompts import SYSTEM_PROMPT_JSON, SUMMARIZE_MEETING_PROMPT
 
-def summarize_and_extract(transcript: str, llm_client: OllamaClient) -> dict:
+def summarize_and_extract(transcript: str, llm_client: OllamaClient, past_context: str = "") -> dict:
     """Uses LLM to summarize the meeting and extract structured data."""
-    prompt = SUMMARIZE_MEETING_PROMPT.format(transcript=transcript)
+    prompt = SUMMARIZE_MEETING_PROMPT.format(
+        transcript=transcript,
+        past_context=past_context if past_context else "No similar past meetings found."
+    )
     
     response_text = llm_client.generate(
         prompt=prompt,

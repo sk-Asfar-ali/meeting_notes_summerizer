@@ -9,12 +9,12 @@ class SummarizerAgent:
     def __init__(self, llm_client: OllamaClient):
         self.llm_client = llm_client
 
-    def process_transcript(self, meeting_id: str, transcript: str) -> dict:
+    def process_transcript(self, meeting_id: str, transcript: str, past_context: str = "") -> dict:
         """Generates summary, decisions, risks, and extracts actions."""
         logger.info(f"SummarizerAgent processing transcript for meeting {meeting_id}")
         
         # 1. Summarize and extract raw JSON data
-        raw_summary_data = summarize_and_extract(transcript, self.llm_client)
+        raw_summary_data = summarize_and_extract(transcript, self.llm_client, past_context)
         
         # 2. Process action items into structured format
         action_items = process_extracted_actions(meeting_id, raw_summary_data.get('action_items', []))

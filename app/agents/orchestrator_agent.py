@@ -29,10 +29,19 @@ class OrchestratorAgent:
         # 3. Chunk for Vector DB
         chunks = chunk_transcript(cleaned_text)
         
-        # 4. Summarize and Extract (using SummarizerAgent)
+        # 4. Fetch Past Context (RAG)
+        search_query = f"{title} {cleaned_text[:500]}"
+        past_meetings = self.memory_agent.search_history(search_query, n_results=3)
+        
+        past_context = ""
+        if past_meetings:
+            for pm in past_meetings:
+                past_context += f"Meeting: {pm['title']}\nSummary: {pm['summary_snippet']}\n\n"
+                
+        # 5. Summarize and Extract (using SummarizerAgent)
         # Note: If transcript is extremely long, we might need to map-reduce, 
-        # but for simplicity and 8GB RAM limit, we assume it fits in context window of Qwen2.5:1.5b (up to 32k tokens typically)
-        summary_dict = self.summarizer_agent.process_transcript(meeting_id, cleaned_text)
+        # but for simplicity and 8GB RAM limit, we assume it fits in context window of llama3.2 (up to 128k tokens typically)
+        summary_dict = self.summarizer_agent.process_transcript(meeting_id, cleaned_text, past_context)
         
         # 5. Save to Memory (using MemoryAgent)
         self.memory_agent.store_meeting(meeting_dict, summary_dict, chunks)
