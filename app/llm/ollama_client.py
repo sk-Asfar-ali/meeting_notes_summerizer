@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class OllamaClient:
-    def __init__(self, model_name: str = "llama3.2"):
+    def __init__(self, model_name: str = "qwen2.5:1.5b"):
         self.model_name = model_name
 
     def generate(self, prompt: str, system_prompt: Optional[str] = None, json_format: bool = False, temperature: float = 0.3) -> str:
