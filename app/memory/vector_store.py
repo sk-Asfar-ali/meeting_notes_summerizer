@@ -1,19 +1,24 @@
+"""ChromaDB storage layer for semantic search and transcript retrieval."""
+
 import chromadb
 from chromadb.utils import embedding_functions
 import os
 
 class VectorStore:
+    """Persist embeddings for transcript chunks and meeting summaries."""
+
     def __init__(self, persist_directory: str = "data/chroma_db"):
         self.persist_directory = persist_directory
         os.makedirs(self.persist_directory, exist_ok=True)
         self.client = chromadb.PersistentClient(path=self.persist_directory)
-        
-        # Use a lightweight sentence-transformers model
+
+        # Use a lightweight sentence-transformers model that works on typical laptops.
         self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
             model_name="all-MiniLM-L6-v2"
         )
-        
-        # Collections for different types of searches
+
+        # Keep transcript chunks and meeting summaries separate because they
+        # answer different retrieval questions.
         self.transcript_collection = self.client.get_or_create_collection(
             name="transcripts", 
             embedding_function=self.embedding_function
@@ -59,7 +64,8 @@ class VectorStore:
         """Semantic search across all past meetings."""
         if self.meeting_summary_collection.count() == 0:
             return []
-            
+
+        # Chroma errors if we ask for more rows than currently exist.
         n_results = min(n_results, self.meeting_summary_collection.count())
         results = self.meeting_summary_collection.query(
             query_texts=[query],

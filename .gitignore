@@ -8,6 +8,15 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Frontend dependencies/build output
+frontend/node_modules/
+frontend/dist/
+
+# Local runtime stores
+data/meeting_notes.db
+data/chroma_db/
+
 evaluator_guide.md
 PROJECT_GUIDE.md
 uv.lock

@@ -32,6 +32,33 @@ pip install -r requirements.txt
 If you have Kaggle dataset files (`train_df`, `test_df`, `validate_df` in CSV or Parquet format), place them inside the `data/dataset/` directory.
 
 ### 4. Run the Application
+
+#### React UI
+Start the API:
+```bash
+python -m uvicorn app.api.server:app --host 127.0.0.1 --port 8000
+```
+
+In a second terminal, start the React dev server:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://127.0.0.1:5173`.
+
+You can also build the React app and serve it from the API:
+```bash
+cd frontend
+npm run build
+cd ..
+python -m uvicorn app.api.server:app --host 127.0.0.1 --port 8000
+```
+
+Open `http://127.0.0.1:8000`.
+
+#### Legacy Streamlit UI
 ```bash
 streamlit run streamlit_app.py
 ```

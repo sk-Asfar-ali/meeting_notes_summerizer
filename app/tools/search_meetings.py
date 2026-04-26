@@ -1,3 +1,5 @@
+"""Semantic search helper for finding similar past meetings."""
+
 from app.memory.vector_store import VectorStore
 
 def search_past_meetings(query: str, vector_store: VectorStore, n_results: int = 5) -> list[dict]:

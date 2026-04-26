@@ -1,3 +1,5 @@
+"""Helpers for persisting structured and semantic meeting data together."""
+
 from app.memory.sqlite_store import SQLiteStore
 from app.memory.vector_store import VectorStore
 

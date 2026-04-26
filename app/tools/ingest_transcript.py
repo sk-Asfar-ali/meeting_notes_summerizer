@@ -1,3 +1,5 @@
+"""Helpers for turning raw transcript text into a meeting record."""
+
 import uuid
 from datetime import datetime
 

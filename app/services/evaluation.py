@@ -1,3 +1,5 @@
+"""Helpers for timing the end-to-end processing pipeline on sample inputs."""
+
 import time
 from app.agents.orchestrator_agent import OrchestratorAgent
 import logging
@@ -5,6 +7,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class EvaluationService:
+    """Run a sample through the orchestrator and report timing + success state."""
+
     def __init__(self, orchestrator: OrchestratorAgent):
         self.orchestrator = orchestrator
 

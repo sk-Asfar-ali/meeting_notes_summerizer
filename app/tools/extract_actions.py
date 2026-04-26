@@ -1,3 +1,5 @@
+"""Normalize raw model action items into the app's storage format."""
+
 import uuid
 
 def process_extracted_actions(meeting_id: str, raw_action_items: list) -> list[dict]:

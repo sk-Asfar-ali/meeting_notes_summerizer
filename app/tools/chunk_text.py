@@ -1,4 +1,6 @@
-def chunk_transcript(text: str, max_words: int = 400, overlap: int = 50) -> list[str]:
+"""Split long transcripts into overlapping chunks for embedding search."""
+
+def chunk_transcript(text: str, max_words: int = 800, overlap: int = 100) -> list[str]:
     """Splits transcript into overlapping chunks for embedding."""
     if not text:
         return []
@@ -9,6 +11,8 @@ def chunk_transcript(text: str, max_words: int = 400, overlap: int = 50) -> list
     if len(words) <= max_words:
         return [text]
         
+    # Overlap keeps some continuity between neighboring chunks so retrieval has
+    # a better chance of capturing full thoughts.
     for i in range(0, len(words), max_words - overlap):
         chunk = " ".join(words[i:i + max_words])
         chunks.append(chunk)

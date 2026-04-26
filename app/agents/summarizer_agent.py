@@ -1,3 +1,5 @@
+"""Agent responsible for turning transcript text into structured meeting output."""
+
 from app.tools.summarize_meeting import summarize_and_extract
 from app.tools.extract_actions import process_extracted_actions
 from app.llm.ollama_client import OllamaClient
@@ -6,6 +8,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class SummarizerAgent:
+    """Wrap the LLM summarization flow and normalize its output for storage."""
+
     def __init__(self, llm_client: OllamaClient):
         self.llm_client = llm_client
 

@@ -1,3 +1,5 @@
+"""Agent that owns storage, retrieval, and semantic search responsibilities."""
+
 from app.memory.sqlite_store import SQLiteStore
 from app.memory.vector_store import VectorStore
 from app.tools.save_meeting import save_meeting_data
@@ -5,6 +7,8 @@ from app.tools.search_meetings import search_past_meetings
 from app.tools.retrieve_context import retrieve_transcript_context
 
 class MemoryAgent:
+    """Thin abstraction over the structured and vector memory layers."""
+
     def __init__(self, sqlite_store: SQLiteStore, vector_store: VectorStore):
         self.sqlite_store = sqlite_store
         self.vector_store = vector_store

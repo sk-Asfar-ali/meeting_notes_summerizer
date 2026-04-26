@@ -1,15 +1,20 @@
+"""SQLite storage layer for structured meeting records and extracted actions."""
+
 import sqlite3
 import json
 import os
 from typing import List, Dict, Any
 
 class SQLiteStore:
+    """Persist structured meeting data in a simple local SQLite database."""
+
     def __init__(self, db_path: str = "data/meeting_notes.db"):
         self.db_path = db_path
         os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
         self._init_db()
 
     def _init_db(self):
+        """Create the database tables the application depends on."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute('''
@@ -45,6 +50,7 @@ class SQLiteStore:
             conn.commit()
 
     def save_meeting(self, meeting_dict: Dict[str, Any]):
+        """Store or replace the raw meeting record."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -55,6 +61,7 @@ class SQLiteStore:
             conn.commit()
 
     def save_summary(self, summary_dict: Dict[str, Any]):
+        """Store the structured summary and replace old action items for the meeting."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
@@ -66,6 +73,9 @@ class SQLiteStore:
                  json.dumps(summary_dict.get('decisions', [])),
                  json.dumps(summary_dict.get('risks_blockers', [])))
             )
+            # Action items are rewritten from the latest summary so stale items
+            # do not survive when a meeting is reprocessed.
+            cursor.execute('DELETE FROM action_items WHERE meeting_id = ?', (summary_dict['meeting_id'],))
             for item in summary_dict.get('action_items', []):
                 if isinstance(item, dict):
                     cursor.execute(
@@ -77,6 +87,7 @@ class SQLiteStore:
             conn.commit()
 
     def get_all_meetings(self) -> List[Dict[str, Any]]:
+        """Return lightweight meeting cards for list views."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute('SELECT id, title, date FROM meetings')
@@ -84,6 +95,7 @@ class SQLiteStore:
             return [{'id': row[0], 'title': row[1], 'date': row[2]} for row in rows]
 
     def get_meeting(self, meeting_id: str) -> Dict[str, Any]:
+        """Return the raw meeting record, including transcript and metadata."""
         with sqlite3.connect(self.db_path) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
@@ -94,6 +106,7 @@ class SQLiteStore:
             return None
 
     def get_summary(self, meeting_id: str) -> Dict[str, Any]:
+        """Return one summary and its related action items."""
         with sqlite3.connect(self.db_path) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
